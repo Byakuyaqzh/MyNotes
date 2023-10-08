@@ -98,10 +98,3 @@ string bin = bitset<32>(i).to_string();
 
 
 
-
-
-
-
-
-
-
