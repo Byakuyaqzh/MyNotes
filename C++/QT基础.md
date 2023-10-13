@@ -186,7 +186,7 @@ QMAINWindow
 //  6 Central Widget    中心部件     只能有一个
 ```
 
-![image-20221120170645889](D:\Typora\pic\image-20221120170645889.png)
+
 
 
 
