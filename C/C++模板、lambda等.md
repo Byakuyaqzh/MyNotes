@@ -33,10 +33,6 @@ sort(nums.begin(), nums.end(), [](int a, int b){
 
 
 
-
-
-
-
 #### function
 
 ```C++
