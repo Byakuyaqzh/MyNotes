@@ -440,14 +440,38 @@ q.empty();      //  判断是否为空（空返回 1，非空返回 0）
 
 
 
-补充：priority_queue
+###### 补充：priority_queue
 
-​	priority_queue优先队列，是一种容器适配器，采用了堆这样的数据结构，保证了第一个元素总是整个优先队列中**最大的**(或**最小的**)元素。
-
-​	priority_queue在插入时会自动排序，保证：
+​	priority_queue优先队列，是一种容器适配器，采用了堆这样的数据结构，保证了第一个元素总是整个优先队列中**最大的**(或**最小的**)元素。priority_queue在插入时会自动排序。
 
 ```c++
-pq.top();  //  是最大元素
+//  构造函数
+//  1、默认构造
+priority_queue<T> pq;
+//  2、指定比较规则的排序
+//  Container是底层容器类型，默认为 std::vector<T>
+//  Compare是比较规则的类型，可以是函数指针、函数对象或者 lambda 表达式，
+//         默认情况下，如果不指定 Compare，则使用less<T>，即最大堆（队头元素最大）
+priority_queue<T, Container, Compare> pq;
+
+//  3、使用现有元素构造
+vector<int> vec = {1, 2, 3, 4, 5};
+priority_queue<int, vector<int>> pq(vec.begin(), vec.end());
+```
+
+```c++
+//  自定义排序规则，创建最小堆（队头元素最小）
+vector<int> vec = {1, 2, 3, 4, 5};
+function<bool(int, int)> f = [](int a, int b) { return a > b; };
+
+//  使用自定义排序规则时，需要在参数中传递f。使用less<int>或greater<int>时不需要
+priority_queue<int, vector<int>, decltype(f)> pq(vec.begin(), vec.end(), f);
+
+//  或：
+priority_queue<int, vector<int>, decltype(f)> pq(f);
+for(auto num : vec){
+    pq.push(num);
+}
 ```
 
 
