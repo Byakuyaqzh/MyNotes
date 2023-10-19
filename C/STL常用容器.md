@@ -2,8 +2,6 @@
 
 
 
-
-
 ## STL
 
 ​	STL：Standard Template Library，标准模板库。内置了一些高效的C++程序库，为C++程序员们提供了一个可扩展的应用框架。
@@ -440,7 +438,7 @@ q.empty();      //  判断是否为空（空返回 1，非空返回 0）
 
 
 
-###### 补充：priority_queue
+##### 补充：priority_queue
 
 ​	priority_queue优先队列，又称最大堆/最小堆，是一种容器适配器，采用了堆这样的数据结构，保证了第一个元素总是整个优先队列中**最大的**(或**最小的**)元素。priority_queue在插入时会自动排序。
 
@@ -813,7 +811,7 @@ set<int, MyCompare> s = {1,2,4,5,3};
 
 
 
-**补充：unordered_set**
+##### **补充：unordered_set**
 
 ```c++
 //  头文件
@@ -831,7 +829,7 @@ set<int, MyCompare> s = {1,2,4,5,3};
 
 ​	map 类型变量中的元素是由对组pair组成的键-值对，map没有重复的键，multimap允许有重复的键。
 
-​	所有元素在插入时会按照键值自动从小到大排序。
+​	所有元素在插入时会按照键值自动**从小到大**排序。
 
 ```c++
 //  头文件
@@ -852,6 +850,10 @@ map<int, char> m = {
 map<int, char> m;
 m[4] = 'a';
 
+//  默认初始化为0
+map<int, int> m
+m[num];  //  初始值为0
+
 //  使用insert 
 map<int, string> m;
 a.insert(pair(1,"abc"));
@@ -867,6 +869,8 @@ map<int, string> m2(m1);
 ​			1、  erase()  删除元素
 
 ​			2、  重载操作符，指定排序规则
+
+​			3、  遍历map容器
 
 ```C++
 //  0  常用操作
@@ -916,11 +920,51 @@ map<int, char, MyCompare> m = {{1, 'a'}, {2, 'b'}, {3, 'c'}, {4, 'd'}, {5, 'e'}}
 //  结果： m = {{5, 'e'}, {4, 'd'}, {3, 'c'}, {2, 'b'}, {1, 'a'}}
 ```
 
+```c++
+//  3  遍历
+//  map中每一个元素都是pair类型
+struct pair{
+    T first;
+    T second;
+};
+
+//  可通过以下方式遍历
+//  1、使用map的迭代器
+for(auto it = m.begin(); it != m.end(); it ++){
+    cout << it -> first <<" "<< it -> second << endl;
+    //  或：
+    cout << (*it).first <<" "<< (*it).second << endl;
+}
+//  2、使用结构化绑定，需要编译器支持C++17。可以使用_忽略某个元素，如auto& [_, b]
+for(auto& [a, b] : m){
+    cout << a << " " << b << endl;
+}
+```
+
+##### 补充：pair
+
+```c++
+//  头文件
+#include<utiliity>
+```
+
+```c++
+//  构造
+pair<T1, T2> p;
+
+pair<int, string> p = {1, "string"};
+
+auto p = make_pair(1, "string");
+
+//  访问
+cout << p.first << " " << p.second << endl;
+```
 
 
 
 
-**补充：unordered_map**
+
+##### **补充：unordered_map**
 
 ```c++
 //  头文件
@@ -931,24 +975,25 @@ map<int, char, MyCompare> m = {{1, 'a'}, {2, 'b'}, {3, 'c'}, {4, 'd'}, {5, 'e'}}
 
 **map**
 
-​	优点：
+- 优点：
 
 ​		**有序性**，这是map结构最大的优点，其元素的有序性在很多应用中都会简化很多的操作；
 
 ​		**红黑树**，内部实现一个红黑树使得map的很多操作在O(logn)的时间复杂度下就可以实现，因此效率非常的高。
 
-​	缺点：
+- 缺点：
 
 ​		**空间占用率高**，因为map内部实现了红黑树，虽然提高了运行效率，但是因为每一个节点都需要额外保存父节点、孩子节点和红/黑性质，使得每一个节点都占用大量的空间
 
-​	应用场景：对于那些有顺序要求的问题，用map会更高效一些
+​	应用场景：map内部的元素是有序的，对于那些有顺序要求的问题，用map会更高效一些
 
 **unordered_map**
 
-​	优点：
+- 优点：
 
 ​		**查找速度快**，因为内部实现了哈希表，因此其查找速度非常的快
-​	缺点：
+
+- 缺点：
 
 ​		**建立花费时间**，哈希表的建立比较耗费时间
 ​	应用场景：对于查找问题，unordered_map会更加高效一些。
@@ -964,19 +1009,9 @@ map<int, char, MyCompare> m = {{1, 'a'}, {2, 'b'}, {3, 'c'}, {4, 'd'}, {5, 'e'}}
 ```C++
 //  头文件
 #include<algorithm>
-#include<numeric>
-#include<functional>
 ```
 
 ​	algorithm是所有STL头文件中最大的一个，范围涉及比较、交换、遍历、复制、修改等。
-
-​	numeric提及很小，只包括几个在序列上进行简单数学运算的模板。
-
-​	functional定义了一些模板类，用以声明函数对象。
-
-​	一般建议只使用`#include<algorithm>`
-
-
 
 #### sort() 排序
 
