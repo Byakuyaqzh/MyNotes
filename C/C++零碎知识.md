@@ -165,7 +165,29 @@ f(a, b);
 cout << a << "   " << b << endl;
 ```
 
+#### #include\<numeric>
 
+1  `accumulate()`
+
+2 `iota()`
+
+```c++
+#include<numeric>
+
+//  accumulate()
+//  T accumulate(InputIt first, InputIt last, T init);
+//  计算初始值+数组元素累加值
+int a[5] = {0,1,2,3,4};
+int ans = accumulate(a, a + 5, 10);
+//  结果：10 + 0 + 1 + 2 + 3 + 4 = 20
+
+//  iota()
+//  void iota(ForwardIt first, ForwardIt last, T value);
+//  为数组内元素赋一段累加的值，初始值为value
+int a[5];
+iota(a, a + 5, 0);  //  0 1 2 3 4
+iota(a, a + 5, 5);  //  5 6 7 8 9
+```
 
 
 
