@@ -36,7 +36,14 @@ string s = to_string(num);  //  数字 转化为 字符串
 
 string s = "100";
 int num1 = stoi(s);  //  字符串 转化为 整形
-int num2 = stol(s);  //  字符串 转化为 长整形
+long num2 = stol(s);  //  字符串 转化为 长整形(long)
+//  除此之外，还有：
+//  stoul()  --  unsingned long
+//  stoll()  --  long long
+//  stoull() --  unsingned long long
+//  stof()   --  float
+//  stod()   --  double
+//  stold()  --  long double
 ```
 
 
