@@ -217,7 +217,11 @@ string s = "abcdefg";
 //  删除 a 的 第 [1] 到第 [4] 个元素，即删除 [1,5) 内的元素，前闭后开
 //  0   1   2  3   4  5  6
 //  a  *b  *c *d  *e  f  g
-a.erase( s.begin() + 1 , a.begin() + 5 );
+s.erase( s.begin() + 1 , a.begin() + 5 );
+
+//  注：可以直接使用s.pop_back()删除s的最后一位（不含'\0'），注意s非空
+string s = "abc";
+s.pop_back();  //  s = "ab"
 ```
 
 
@@ -440,7 +444,13 @@ q.empty();      //  判断是否为空（空返回 1，非空返回 0）
 
 ##### 补充：priority_queue
 
-​	priority_queue优先队列，又称最大堆/最小堆，是一种容器适配器，采用了堆这样的数据结构，保证了第一个元素总是整个优先队列中**最大的**(或**最小的**)元素。priority_queue在插入时会自动排序。
+​	priority_queue优先队列，又称最大堆/最小堆，是一种**容器适配器**，采用了堆这样的数据结构，保证了第一个元素总是整个优先队列中**最大的**(或**最小的**)元素。priority_queue在插入时会自动排序。但是并不保证内部元素的有序性。
+
+​	容器适配器的特点：
+
+- **适配器容器的底层实现是基于其他容器的**：适配器容器不是从头开始实现一个新的容器，而是建立在现有容器（如 `std::deque`、`std::vector`）之上，通过改变接口或添加一些特定的功能，使得容器具有不同的行为特性。
+- **适配器容器不直接提供迭代器**：大部分适配器容器（比如 `std::stack`、`std::queue`、`std::priority_queue`）不提供迭代器访问元素。这是因为它们的设计目的通常是限制用户的访问方式，使得用户只能按照特定的方式操作容器。
+- **适配器容器提供了特定的接口和操作**：适配器容器提供了一些特定于其用途的接口和操作。例如，`std::stack` 只提供 `push()`、`pop()`、`top()` 等操作，`std::queue` 也有类似的限制。
 
 ```c++
 //  构造函数
@@ -470,6 +480,30 @@ priority_queue<int, vector<int>, decltype(f)> pq(f);
 for(auto num : vec){
     pq.push(num);
 }
+```
+
+```c++
+//  priority_queue<> 中没有.front()和.back()，而是用.top()获取堆的顶部元素
+q.top();  //  返回堆顶元素
+```
+
+```c++
+//  另外，可以使用其他容器原地堆化实现堆
+vector<int> nums = {1,4,2,5,3};
+
+//  原地堆化，时间复杂度O(n)
+//   - 堆化后仍然可以使用vector<>容器自身的操作
+//   - 堆化后仅保证nums[0]是最大值，不保证后续元素有序
+make_heap(nums.begin(), nums.end());  //  最大堆
+make_heap(nums.begin(), nums.end(), less<int>());  //  最小堆
+
+//  弹出堆顶元素，将其移至末尾，不参与堆的排序
+pop_heap(nums.begin(), nums.end());
+//  执行后，nums = 4 3 2 1 5, 5被移至末尾，4成为堆顶元素
+
+//  将指定范围的末尾元素加入堆，重新调整范围内的元素，使其重新构成一个堆
+push_heap(nums.begin(), nums.end());
+//  在执行上面的pop_heap()后，5被移至末尾。执行push_heap()后，5被重新加入堆中
 ```
 
 
@@ -811,7 +845,7 @@ set<int, MyCompare> s = {1,2,4,5,3};
 
 
 
-##### **补充：unordered_set**
+##### 补充：unordered_set
 
 ```c++
 //  头文件
@@ -964,7 +998,7 @@ cout << p.first << " " << p.second << endl;
 
 
 
-##### **补充：unordered_map**
+##### 补充：unordered_map
 
 ```c++
 //  头文件
