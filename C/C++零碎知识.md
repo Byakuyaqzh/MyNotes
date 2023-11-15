@@ -200,7 +200,14 @@ iota(a, a + 5, 5);  //  5 6 7 8 9
 
 
 
+获取最大值
 
+```cpp
+vector<int> nums = {2,4,1,5,2,3,6}
+//  max_element返回指向最大元素的迭代器,*max_element用来取最大值。
+//  如果有多个元素具有相同的最大值，将返回指向第一个找到的最大元素的迭代器。
+int m = *max_element(nums.begin(), nums.end());
+```
 
 
 
